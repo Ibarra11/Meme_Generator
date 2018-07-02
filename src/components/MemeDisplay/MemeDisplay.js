@@ -1,17 +1,27 @@
 import React, {Component} from 'react';
 import './MemeDisplay.css';
+import {connect} from 'react-redux';
 
 class MemeDisplay extends Component{
+
+    displayMeme = () =>{
+        return <img className="meme-img" src={this.props.meme.url} />
+    }
+
     render(){
         return(
             <div className="meme-display-component">
-            <div className="meme-display-header">
-                <h3>Your Meme Will Appear Here</h3>
-            </div>
-                
+                {!this.props.meme ? <h2>Select a background image to begin</h2> : this.displayMeme()}
             </div>
         )
     }
 }
 
-export default MemeDisplay;
+function mapStateToProps(state){
+    
+    return{
+        meme: state
+    }
+}
+
+export default connect(mapStateToProps)(MemeDisplay);

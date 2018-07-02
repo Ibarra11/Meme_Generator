@@ -1,22 +1,35 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import './MemeGenerator.css';
+import {connect} from 'react-redux';
+import {selectedMeme} from '../../redux/reducer';
+import axios from 'axios';
 
 class MemeGenerator extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            imgUrl: '',
-            caption: ''
+            memeList: [],
+            topCaption: '',
+            bottomCaption: ''
         }
     }
+
+    componentDidMount(){
+        axios.get('https://api.imgflip.com/get_memes')
+        .then(res => this.setState({ memeList: res.data.data.memes}))
+        .catch(err => console.log(err))
+    }
+
     onInputChange = event => this.setState({ [event.target.name]: event.target.value })
 
     generateMeme = event => {
         event.preventDefault();
-        axios.post('/api/memegenerator', { imgUrl: this.state.imgUrl, caption: this.state.caption })
-            .then((res) => { console.log(res) })
     }
+
+    onMemeChange = event =>{
+        this.props.selectedMeme(this.state.memeList[event.target.value]);
+    }
+
 
     render() {
         return (
@@ -26,13 +39,22 @@ class MemeGenerator extends Component {
                     <h2>Create & Share Your Memes</h2>
                 </div>
                 <div className="meme-generator-form">
-                    <form onSubmit={this.generateMeme}>
+                    <form id="meme-generator" onSubmit={this.generateMeme}>
                         <div className="form-group">
-                            <label class="form-label" For="input-img">Image Url</label>
-                            <input id="input-img" className="form-control" onChange={this.onInputChange} value={this.state.imgUrl} placeholder="Enter an image url" name='imgUrl' type="text" />
+                            <label className="form-label" htmlFor="input-img">Background Img</label>
+                            <select onChange={this.onMemeChange} required className="form-control" form='meme-generator' name="meme-select">
+                                <option value="" disabled selected>Select your img</option>
+                                {this.state.memeList.map((meme,index) =>{
+                                    return <option value={index} key={meme.id} >{meme.name}</option>
+                                })}
+                            </select>
                         </div>
                         <div className="form-group">
-                            <label className="form-label" for="input-caption">Caption</label>
+                            <label className="form-label" htmlFor="input-caption">Top Caption</label>
+                            <input id="input-caption" className="form-control" onChange={this.onInputChange} value={this.state.caption} placeholder="Write a caption for your meme" name='caption' type="text" />
+                        </div>
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="input-caption">Bottom Caption</label>
                             <input id="input-caption" className="form-control" onChange={this.onInputChange} value={this.state.caption} placeholder="Write a caption for your meme" name='caption' type="text" />
                         </div>
                         <div className="btn-container">
@@ -45,4 +67,4 @@ class MemeGenerator extends Component {
     }
 }
 
-export default MemeGenerator;
+export default connect(null, {selectedMeme})(MemeGenerator); 
