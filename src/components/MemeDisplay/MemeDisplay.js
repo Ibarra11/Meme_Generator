@@ -11,16 +11,16 @@ class MemeDisplay extends Component{
     render(){
         return(
             <div className="meme-display-component">
-                {!this.props.meme ? <h2>Select a background image to begin</h2> : this.displayMeme()}
+                {!this.props.generatedMeme ? <h2>Select a background image </h2> : <img className="meme-img" src={this.props.generatedMeme} /> }
             </div>
         )
     }
 }
 
 function mapStateToProps(state){
-    
     return{
-        meme: state
+        meme: state.selectedMeme,
+        generatedMeme: state.generatedMeme
     }
 }
 

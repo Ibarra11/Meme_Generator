@@ -2,16 +2,19 @@
   "name": "meme_generator",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3005",
+  "proxy": "https://api.imgflip.com",
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "form-data": "^2.3.2",
+    "querystring": "^0.2.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
     "react-scripts": "1.1.4",
-    "redux-promise": "^0.6.0"
+    "redux-promise": "^0.6.0",
+    "request": "^2.87.0"
   },
   "scripts": {
     "start": "react-scripts start",
