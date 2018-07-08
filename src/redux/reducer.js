@@ -30,7 +30,7 @@ export default function(state=intialState, action){
 }
 
 export function fetchMemes(){
-    const request = axios.get('/get_memes');
+    const request = axios.get('https://api.imgflip.com/get_memes');
     return{
         type: FETCH_MEMES,
         payload: request
@@ -45,7 +45,7 @@ export function selectedMeme(meme){
 }
 
 export function createMeme(id, topCaption, bottomCaption){
-    const request = axios.post('/caption_image', querystring.stringify({
+    const request = axios.post('https://api.imgflip.com/caption_image', querystring.stringify({
       template_id: id,
       username: 'aibarra13',
       password: 'ibarra2016!',

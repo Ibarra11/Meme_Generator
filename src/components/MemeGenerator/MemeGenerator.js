@@ -39,7 +39,7 @@ class MemeGenerator extends Component {
         return (
             <div className="meme-generator-component">
                 <div className="meme-generator-heading">
-                    <h1>MemeGenerator</h1>
+                    <h1>Meme Lab</h1>
                     <h2>Create & Share Your Memes</h2>
                 </div>
                 <div className="meme-generator-form">
