@@ -3,6 +3,7 @@ import axios from 'axios';
 import querystring from 'querystring';
 
 
+
 let intialState = {
     memeList: [],
     selectedMeme: [],
@@ -11,6 +12,7 @@ let intialState = {
 const SELECTED_MEME = 'SELECTED_MEME';
 const FETCH_MEMES = 'FETCH_MEMES';
 const CREATE_MEME = 'CREATE_MEME';
+const RESET_STATE = 'RESET_STATE';
 
 export default function(state=intialState, action){
     switch(action.type){
@@ -19,8 +21,9 @@ export default function(state=intialState, action){
         case SELECTED_MEME:
             return Object.assign({}, state, {selectedMeme: action.payload} )
         case CREATE_MEME:
-            console.log(action.payload)
             return Object.assign({}, state, {generatedMeme: action.payload.data.data.url} )
+        case RESET_STATE:
+            return Object.assign({}, state, {generatedMeme: ''});
         default:
             return state;
     }
@@ -49,10 +52,14 @@ export function createMeme(id, topCaption, bottomCaption){
       text0: topCaption,
       text1: bottomCaption
 }))
-
 return{
     type: CREATE_MEME,
     payload: request
 }
+}
 
+export function resetState(){
+    return{
+        type: RESET_STATE,
+    }
 }

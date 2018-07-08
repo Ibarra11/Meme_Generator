@@ -25,6 +25,10 @@ class MemeGenerator extends Component {
         let {topCaption, bottomCaption} = this.state;
         this.props.createMeme(id, topCaption, bottomCaption);
         
+        this.setState({
+            topCaption: '',
+            bottomCaption: ''
+        })
     }
 
     onMemeChange = event => {
@@ -42,7 +46,7 @@ class MemeGenerator extends Component {
                     <form id="meme-generator" onSubmit={this.generateMeme}>
                         <div className="form-group">
                             <label className="form-label" htmlFor="input-img">Background Img</label>
-                            <select onChange={this.onMemeChange} required className="form-control" form='meme-generator' name="meme-select">
+                            <select required onChange={this.onMemeChange} required className="form-control" form='meme-generator' name="meme-select">
                                 <option value="" disabled selected>Select your img</option>
                                 {this.props.memeList ? this.props.memeList.map((meme, index) => {
                                     return <option value={index} key={meme.id} >{meme.name}</option>
@@ -51,14 +55,14 @@ class MemeGenerator extends Component {
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="input-caption">Top Caption</label>
-                            <input id="input-caption" className="form-control" onChange={this.onInputChange} value={this.state.topCaption} placeholder="Write a caption for your meme" name='topCaption' type="text" />
+                            <input required id="input-caption" className="form-control" onChange={this.onInputChange} value={this.state.topCaption} placeholder="Write a caption for your meme" name='topCaption' type="text" />
                         </div>
                         <div className="form-group">
                             <label className="form-label" htmlFor="input-caption">Bottom Caption</label>
-                            <input id="input-caption" className="form-control" onChange={this.onInputChange} value={this.state.bottomCaption} placeholder="Write a caption for your meme" name='bottomCaption' type="text" />
+                            <input required id="input-caption" className="form-control" onChange={this.onInputChange} value={this.state.bottomCaption} placeholder="Write a caption for your meme" name='bottomCaption' type="text" />
                         </div>
                         <div className="btn-container">
-                            <button className="btn " type="submit">Generate Meme</button>
+                            <button className="btn" type="submit">Generate Meme</button>
                         </div>
                     </form>
                 </div>
